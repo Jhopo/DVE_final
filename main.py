@@ -34,7 +34,10 @@ if __name__ == '__main__':
     # load image
     filename = './img/{}.{}'.format(args.filename, args.ext)
     img = cv2.imread(filename)
-    img = cv2.resize(img, (int(img.shape[1]/5), int(img.shape[0]/5)), interpolation=cv2.INTER_CUBIC)
+
+    # resize iamge if necessary
+    #img = cv2.resize(img, (int(img.shape[1]/5), int(img.shape[0]/5)), interpolation=cv2.INTER_CUBIC)
+
 
     # decomposition in grayscale
     if not args.rgb:
