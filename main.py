@@ -15,7 +15,7 @@ from step3_smoothed_mean import compute_smoothed_mean
 if __name__ == '__main__':
     # parse argument
     parser = argparse.ArgumentParser()
-    parser.add_argument("--filename", default = 'mountain', type = str)
+    parser.add_argument("--filename", default = 'sakura', type = str)
     parser.add_argument("--ext", default = 'jpg', type = str)
     parser.add_argument("--output_dir", default = 'output', type = str)
     parser.add_argument("--save", action='store_true')
@@ -24,6 +24,7 @@ if __name__ == '__main__':
     parser.add_argument("--channel", default = 'gray', type = str)
 
     parser.add_argument("--k", default = 3, type = int)
+    parser.add_argument("--scale", default = 1, type = int)
     args = parser.parse_args()
 
 
@@ -36,7 +37,7 @@ if __name__ == '__main__':
     img = cv2.imread(filename)
 
     # resize iamge if necessary
-    #img = cv2.resize(img, (int(img.shape[1]/5), int(img.shape[0]/5)), interpolation=cv2.INTER_CUBIC)
+    img = cv2.resize(img, (int(img.shape[1]/args.scale), int(img.shape[0]/args.scale)), interpolation=cv2.INTER_CUBIC)
 
 
     # decomposition in grayscale
@@ -50,7 +51,7 @@ if __name__ == '__main__':
         # step 2
         envMin, envMax = compute_envelope(args, matMin, matMax, gray)
 
-        # step 2
+        # step 3
         mean, diff = compute_smoothed_mean(args, envMin, envMax)
 
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
             # step 2
             envMin, envMax = compute_envelope(args, matMin, matMax, gray)
 
-            # step 2
+            # step 3
             mean, diff = compute_smoothed_mean(args, envMin, envMax)
 
             mean_rgb[:, :, 2 - c_i] = mean
